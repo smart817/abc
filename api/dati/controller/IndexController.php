@@ -16,9 +16,9 @@ use cmf\controller\RestBaseController;
 
 class IndexController extends RestBaseController
 {
-    public function aaa()
+    public function getcode()
     {
-        $code='sdfsdfsdf';
+        $code = $request->param('code');
         $config = [
             'app_id' => 'wx5aa61c6d9c263087',
             'secret' => 'd6be2230bdfb3d08a45077ef99114491',
@@ -32,13 +32,15 @@ class IndexController extends RestBaseController
                 'file' => __DIR__.'/wechat.log',
             ],
         ];
+
         $miniProgram = Factory::miniProgram($config);
         $data = $miniProgram->auth->session($code);
         if (isset($data['errcode'])) {
             $this->error('code失效或者不正确');
         }else{
             //array(['openid' => $data['openid'], 'session_key' => $data['session_key']]);
+           $this->success('请求成功!', $data);
         }
-        $this->success('请求成功!', $data);
+       
     }
 }
