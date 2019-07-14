@@ -35,7 +35,7 @@ class IndexController extends RestBaseController
         $miniProgram = Factory::miniProgram($config);
         $data = $miniProgram->auth->session($code);
         if (isset($data['errcode'])) {
-            //return $this->response->errorUnauthorized('code不正确或者code已经失效');
+            $this->error('code失效或者不正确');
         }else{
             //array(['openid' => $data['openid'], 'session_key' => $data['session_key']]);
         }
