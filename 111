@@ -2,3 +2,4 @@ composer 镜像 composer config -g repos.packagist composer https://php.cnpkg.or
 composer require "overtrue/wechat:~4.1" -vvv
 111111
 2222
+3333
