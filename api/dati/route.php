@@ -12,4 +12,6 @@ Route::get('/',function(){
         return json(['code'=>1,'message'=>'操作完成','data'=>$data]);
 });
 
-Route::rule('/code','dati/index/getcode');
+Route::get('/code','dati/index/getcode');
+//Route::rule('/userinfo','dati/index/saveuserinfo');
+Route::post('userinfo','dati/index/saveuserinfo'); // 定义POST请求路由规则

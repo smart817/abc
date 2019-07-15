@@ -21,10 +21,6 @@ class IndexController extends RestBaseController
     public function getcode()
     {
         $code =  $this->request->param('code');
-        $nickName =  $this->request->param('nickName');
-        $avatarUrl =  $this->request->param('avatarUrl');
-        //$code =  $this->request->param('code');
-       //$this->success('请求成功!', ['code'=> $code]);
         $config = [
             'app_id' => 'wx465f003849f31e0e',
             'secret' => 'd59ee15d02f157f827ea3be2835d26d7',
@@ -45,11 +41,27 @@ class IndexController extends RestBaseController
         if (isset($data['errcode'])) {
             $this->error('code失效或者不正确');
         }else{
-            //array(['openid' => $data['openid'], 'session_key' => $data['session_key']]);
-            $user = ['openid'=>$data['openid'],'session_key'=>$data['session_key'],'nickName'=>$nickName ,'avatarUrl'=>avatarUrl ];
-            $userid = db('api_user')->insert($user);
-           $this->success('请求成功!', ['userid'=> $userid]);
+            //根据openid查询数据库中是否包含此openid
+              $isuser = db('api_user')->where('openid',$data['openid'])->find();
+              if(empty($isuser)){
+                $user = ['openid'=>$data['openid'],'session_key'=>$data['session_key'],'add_time'=> time() ];
+                $userid = db('api_user')->insert($user);
+                $this->success('新用户请求成功!', ['userid'=> $userid,'openid'=>$data['openid'] ]);
+              }
+           $this->success('请求成功!', ['userid'=> $isuser['id'],'openid'=>$data['openid'] ]);
         }
        
+    }
+
+    public function saveuserinfo()
+    {
+        $data =  $this->request->param();
+        $data[update_time] =  time();
+        $number = db('api_user')->update($data);
+        if($number == 0){
+            $this->error('用户信息没有更新');
+        }else{
+            $this->success('更新成功!');
+        } 
     }
 }
