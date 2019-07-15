@@ -48,4 +48,10 @@ class QuestionController extends RestBaseController
             $this->success('你已经收藏了');
         }
     }
+    public function changshi()
+    {
+
+        $data = Db::name('api_changshi')->all();
+        $this->success('你已经收藏了',$data);
+    }
 }
