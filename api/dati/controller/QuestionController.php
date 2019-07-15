@@ -19,15 +19,16 @@ class QuestionController extends RestBaseController
 {
     public function getquestion()
     {
+        $questions = Db::name('api_question')->where('fenlei',1)->paginate(1);
+        $this->success('题库', ['questions'=> $questions ]);
+    }
+    public function errorquestion()
+    {
+        //user_id questionid_id
         $data =  $this->request->param();
-        // 查询状态为1的用户数据 并且每页显示10条数据
-        $questions = Db::name('api_question')->where('user_status',1)->paginate(1);
-        // 把分页数据赋值给模板变量users
-        //$this->assign('users', $users);
-        //$this->assign('page', $users->render());//单独提取分页出来
-        // 渲染模板输出
-        return $this->fetch();
-        $this->success('题库', ['questions'=> $questions,'page'=>$questions->render() ]);
+        $questions = Db::name('api_errorquestion')->where('user_id',$data['user_id'])->where('question_id',$data['questionid_id']);
+        $questions = Db::name('api_errorquestion')->insert($data);
+        $this->success('题库', ['questions'=> $questions ]);
     }
 
 }
