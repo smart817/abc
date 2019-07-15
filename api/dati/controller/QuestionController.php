@@ -26,9 +26,14 @@ class QuestionController extends RestBaseController
     {
         //user_id questionid_id
         $data =  $this->request->param();
-        $questions = Db::name('api_errorquestion')->where('user_id',$data['user_id'])->where('question_id',$data['questionid_id']);
-        $questions = Db::name('api_errorquestion')->insert($data);
-        $this->success('题库', ['questions'=> $questions ]);
+        $finddata = Db::name('api_errorquestion')->where('user_id',$data['user_id'])->where('question_id',$data['question_id'])->find();
+        if(empty($finddata))
+        {
+            $questions = Db::name('api_errorquestion')->insert($data);
+            $this->success('错题记录', ['error_id'=> $questions ]);
+        }else{
+            $this->success('你又一次答错了', ['error_id'=> $finddata['id'] ]);
+        }
     }
 
 }
