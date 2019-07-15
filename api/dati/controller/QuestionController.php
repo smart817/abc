@@ -35,5 +35,17 @@ class QuestionController extends RestBaseController
             $this->success('你又一次答错了', ['error_id'=> $finddata['id'] ]);
         }
     }
-
+    public function shoucang()
+    {
+        //user_id questionid_id
+        $data =  $this->request->param();
+        $finddata = Db::name('api_shoucang')->where('user_id',$data['user_id'])->where('question_id',$data['question_id'])->find();
+        if(empty($finddata))
+        {
+            $questions = Db::name('api_shoucang')->insert($data);
+            $this->success('错题记录', ['error_id'=> $questions ]);
+        }else{
+            $this->success('你又一次答错了', ['error_id'=> $finddata['id'] ]);
+        }
+    }
 }

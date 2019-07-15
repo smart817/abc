@@ -17,3 +17,4 @@ Route::get('/code','dati/index/getcode');
 Route::post('userinfo','dati/index/saveuserinfo'); // 定义POST请求路由规则
 Route::get('question','dati/question/getquestion');
 Route::post('errorquestion','dati/question/errorquestion'); 
+Route::post('shoucang','dati/question/shoucang');
