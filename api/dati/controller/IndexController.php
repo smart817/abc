@@ -56,7 +56,7 @@ class IndexController extends RestBaseController
     public function saveuserinfo()
     {
         $data =  $this->request->param();
-        $data[update_time] =  time();
+        $data['update_time'] =  time();
         $number = db('api_user')->update($data);
         if($number == 0){
             $this->error('用户信息没有更新');

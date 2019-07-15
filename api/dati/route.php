@@ -15,3 +15,4 @@ Route::get('/',function(){
 Route::get('/code','dati/index/getcode');
 //Route::rule('/userinfo','dati/index/saveuserinfo');
 Route::post('userinfo','dati/index/saveuserinfo'); // 定义POST请求路由规则
+Route::get('/question','dati/index/getquestion');
