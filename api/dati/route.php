@@ -12,4 +12,4 @@ Route::get('/',function(){
         return json(['code'=>1,'message'=>'操作完成','data'=>$data]);
 });
 
-Route::rule('code','dati/index/getcode');
+Route::rule('/code','dati/index/getcode');
